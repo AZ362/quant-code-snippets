@@ -20,48 +20,12 @@ class DataProcessor:
         lw_interval= self.settings['lw_interval']
         exchange = self.settings['broker_info']['exchange']
         broker_info = {
-            "IC": (51791363, "Lx!oJ1IM0Uqhe0", "ICMarketsSC-Demo", "C:/Program Files/MetaTrader 5 IC Markets Global/terminal64.exe"),
-            "Tickmill": (25171836, "i2[f|4QTQ.}o", "Tickmill-Demo", "C:/Program Files/Tickmill MT5 Terminal/terminal64.exe")
-        }
-
-        if exchange in broker_info:
-            login, password, server, path = broker_info[exchange]
-            if not self.start_mt5(login, password, server, path):
-                print(f"Failed to connect to broker for {symbol}.")
-                return None, None, None, None
-
-        exchange_symbol = self.get_exchange_rate_symbol(symbol, exchange)
-        data, data_lw, exchange_data, exchange_data_lw = None, None, None, None
-
-        if exchange in ['IC', 'Tickmill']:
-            data, data_lw = self.get_mt5_data(symbol, interval, lw_interval, self.period_info)
-            if exchange_symbol:
-                exchange_data, exchange_data_lw = self.get_mt5_data(exchange_symbol, interval, lw_interval, self.period_info)
-        elif exchange == 'binance':
-            fetch_method = self.get_db_binance_data if self.settings['broker_info']['db'] else self.get_binance_data_direct
-            data, data_lw = fetch_method(symbol, interval, lw_interval, self.period_info)
-            if data.empty:
-                print('Incomplete Binance data for input.')
-                return None, None, None, None
-            if exchange_symbol:
-                exchange_data, exchange_data_lw = fetch_method(exchange_symbol, interval, lw_interval, self.period_info)
-        else:
-            print(f"Invalid exchange: {exchange} for symbol {symbol}.")
-
-        print('Data of higher timeframe:\n', data)
-        print('Data of lower timeframe:\n', data_lw)
-        return data, data_lw, exchange_data, exchange_data_lw
-
-    def get_data(self):
-        symbol= self.settings['symbol']
-        interval=self.settings['interval']
-        lw_interval= self.settings['lw_interval']
-        exchange = self.settings['broker_info']['exchange']
-        broker_info = {
-            "IC": (51791363, "Lx!oJ1IM0Uqhe0", "ICMarketsSC-Demo",
+            "IC": (
+                "ICMarketsSC-Demo",
                    "C:/Program Files/MetaTrader 5 IC Markets Global/terminal64.exe"),
             "Tickmill": (
-            25171836, "i2[f|4QTQ.}o", "Tickmill-Demo", "C:/Program Files/Tickmill MT5 Terminal/terminal64.exe")
+            , "Tickmill-Demo",
+                "C:/Program Files/Tickmill MT5 Terminal/terminal64.exe")
         }
 
         if exchange in broker_info:
@@ -190,8 +154,8 @@ class DataProcessor:
     def get_binance_data_direct(self,
             symbol, interval, lw_interval, start_datetime, end_datetime, market_type, retries=3, retry_delay=5
     ):
-        BINANCE_BASE_URL_SPOT = 'https://api.binance.com/api/v3/klines'
-        BINANCE_BASE_URL_FUTURES = 'https://fapi.binance.com/fapi/v1/klines'
+        BINANCE_BASE_URL_SPOT = 
+        BINANCE_BASE_URL_FUTURES = 
         if market_type == 'spot':
             exchange_url = BINANCE_BASE_URL_SPOT
         elif market_type == 'future':
