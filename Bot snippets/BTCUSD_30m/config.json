@@ -1,0 +1,50 @@
+{
+  "broker_setting": {
+    "login": ,
+    "password": ,
+    "server": "",
+    "path": "C:/Program Files/MetaTrader 5 IC Markets Global/terminal64.exe"
+  },
+  
+  "interval": "30 min",
+
+  "strategy_settings": {
+    "symbol": "BTCUSD",
+    "long_trade": true,
+    "short_trade": true,
+    "Martingale": {"active": true,
+                   "n_trade": 3,
+                   "multiplier": 2},
+    "deviation": 0.6,
+    "SL_%": 0.8,
+    "TP_%": 0.8,
+    "spread": 0.000,
+    "Riskamount": 100,
+    "inst_lot": 1,
+    "EMAdev_exit": true,
+    "ema": {"level":100,
+            "Exit": {"active": false, "band_level%": 0.1}
+            },
+
+    "CCI": {"level": 14,
+            "Entry": {"active": false,"oversold": -50 , "overbought": 50}
+            },
+    "STOCH": {"level": 14,
+            "Entry": {"active": false,"oversold": 30 , "overbought": 70}
+            },
+    "RSI": {"level": 14,
+            "Entry": {"active": false,"oversold": 30 , "overbought": 70},
+            "Exit": {"active": false,"close_buy": 50 , "close_sell": 50}
+            }
+  },
+
+  "trading_hours": {
+     "Sunday": ["00:00, 23:57"],
+    "Monday": ["00:00, 23:59"],
+    "Tuesday": ["00:00, 23:59"],
+    "Wednesday": ["00:05, 23:59"],
+    "Thursday": ["00:05, 23:59"],
+    "Friday": ["00:05, 23:57"],
+    "Saturday": ["00:05, 23:57"]
+  }
+}
